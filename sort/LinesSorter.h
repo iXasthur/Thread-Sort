@@ -51,9 +51,9 @@ private:
         }
 
         // Create threads
-        HANDLE hThreads[threadCount];
+        HANDLE threads[threadCount];
         for (int i = 0; i < threadCount; i++) {
-            hThreads[i] = CreateThread(
+            threads[i] = CreateThread(
                     nullptr,                                      // default security attributes
                     0,                                                // use default stack size
                     reinterpret_cast<LPTHREAD_START_ROUTINE>(&static_thread_entry),    // thread function name
@@ -62,7 +62,7 @@ private:
                     nullptr                                            // returns the thread identifier
             );
         }
-        WaitForMultipleObjects(threadCount, hThreads, TRUE, INFINITE);
+        WaitForMultipleObjects(threadCount, threads, TRUE, INFINITE);
 
         // Unite subvectors of lines and sort
         for (auto &subvec : sortedLinesSubvecs) {
