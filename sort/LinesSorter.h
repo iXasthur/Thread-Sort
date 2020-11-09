@@ -28,7 +28,7 @@ private:
         }
     }
 
-    static DWORD static_thread_entry(LPVOID *param) {
+    static long static_thread_entry(void *param) {
         auto *myObj = (LinesSorter *) param;
         myObj->thread();
         return 0;
