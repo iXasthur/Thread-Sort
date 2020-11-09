@@ -83,6 +83,8 @@ public:
         initial = lines;
         if (threadCount > 0) {
             sort(threadCount);
+        } else {
+            throw std::runtime_error("Thread Count must be > 0");
         }
     }
 
