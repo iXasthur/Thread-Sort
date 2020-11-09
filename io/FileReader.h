@@ -11,15 +11,17 @@
 
 class FileReader {
 public:
-    std::vector<std::string> lines;
-
-    explicit FileReader(const std::string &path) {
+    static std::vector<std::string> read(const std::string &path) {
         std::ifstream in(path);
+        std::vector<std::string> lines;
+
         std::string str;
         while (std::getline(in, str)) {
             lines.push_back(str);
         }
         in.close();
+
+        return lines;
     }
 };
 

@@ -4,8 +4,7 @@
 #include "sort/LinesSorter.h"
 
 int main() {
-    FileReader reader = FileReader("in.txt");
-    LinesSorter sorter = LinesSorter(reader.lines, 4);
+    LinesSorter sorter = LinesSorter(FileReader::read("in.txt"), 4);
     FileWriter::write(sorter.sorted, "out.txt");
     return 0;
 }
