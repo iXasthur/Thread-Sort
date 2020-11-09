@@ -45,7 +45,7 @@ private:
         unsigned long long taskLinesCount = linesCount / threadCount;
 
         // Fill sort queue with SortTasks
-        for (int i = 0; i < threadCount ; i++) {
+        for (int i = 0; i < threadCount; i++) {
             std::vector<std::string>::const_iterator start;
             std::vector<std::string>::const_iterator end;
 
