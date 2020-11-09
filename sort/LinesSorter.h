@@ -40,12 +40,24 @@ private:
             threadCount = (int) linesCount;
         }
 
+        unsigned long long linesLeft = linesCount;
+
         unsigned long long taskLinesCount = linesCount / threadCount;
 
         // Fill sort queue with SortTasks
-        for (int i = 0; i < threadCount; ++i) {
-            auto start = initial.begin() + i * taskLinesCount;
-            auto end = start + taskLinesCount;
+        for (int i = 0; i < threadCount ; ++i) {
+            std::vector<std::string>::const_iterator start;
+            std::vector<std::string>::const_iterator end;
+
+            if (i == threadCount - 1) {
+                end = initial.end();
+                start = end - linesLeft;
+            } else {
+                start = initial.begin() + i * taskLinesCount;
+                end = start + taskLinesCount;
+                linesLeft -= taskLinesCount;
+            }
+
             SortTask task = SortTask(std::vector<std::string>(start, end));
             sortQueue.push(task);
         }
@@ -81,7 +93,7 @@ public:
 
     explicit LinesSorter(const std::vector<std::string> &lines, int threadCount) {
         initial = lines;
-        if (threadCount > 0) {
+        if (threadCount > 0 && !initial.empty()) {
             sort(threadCount);
         } else {
             throw std::runtime_error("Thread Count must be > 0");
