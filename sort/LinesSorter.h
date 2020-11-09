@@ -20,7 +20,7 @@ private:
 
     std::vector<std::vector<std::string>> sortedLinesSubvecs;
 
-    void sortThreadEntry() {
+    void thread() {
         if (sortQueue.size() > 0) {
             SortTask task = sortQueue.pop();
             task.execute();
@@ -28,9 +28,9 @@ private:
         }
     }
 
-    static DWORD static_entry(LPVOID *param) {
+    static DWORD static_thread_entry(LPVOID *param) {
         auto *myObj = (LinesSorter *) param;
-        myObj->sortThreadEntry();
+        myObj->thread();
         return 0;
     }
 
@@ -56,7 +56,7 @@ private:
             hThreads[i] = CreateThread(
                     nullptr,                                      // default security attributes
                     0,                                                // use default stack size
-                    reinterpret_cast<LPTHREAD_START_ROUTINE>(&static_entry),    // thread function name
+                    reinterpret_cast<LPTHREAD_START_ROUTINE>(&static_thread_entry),    // thread function name
                     this,                                             // argument to thread function
                     0,                                             // use default creation flags
                     nullptr                                            // returns the thread identifier
